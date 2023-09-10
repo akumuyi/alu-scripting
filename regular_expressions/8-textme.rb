@@ -1,4 +1,4 @@
-#!/bin/usr/env ruby
+#!/usr/bin/env ruby
 log_file_path = "logfile.txt"
 
 from = /\[(.*?)\]/
