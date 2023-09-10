@@ -1,26 +1,31 @@
 #!/usr/bin/env ruby
-log_file_path = "logfile.txt"
+# textme.rb
 
-from = /\[(.*?)\]/
-to = /\[(.*?)\]/
-flags = /\[(.*?)\]/
+# Check if the log file path is provided as a command line argument
+if ARGV.length == 0
+  puts "Usage: ./textme.rb <log_file_path>"
+  exit
+end
 
-File.open(logfile.txt, "r") do |file|
-  file.each_line do |line|
-    line.match(from) do |m|
-      from = m[1]
-      puts "Sender: #{from}"
-    end
+log_file_path = ARGV[0]
 
-    line.match(to) do |m|
-      to = m[1]
-      puts "Receiver: #{to}"
-    end
+# Check if the log file exists
+unless File.exist?(log_file_path)
+  puts "Log file not found: #{log_file_path}"
+  exit
+end
 
-    line.match(flags) do |m|
-      flags = m[1]
-      puts "Flags: #{flags}"
+# Read and process the log file
+File.open(log_file_path, "r") do |file|
+  file.each_line do |log_entry|
+    sender = log_entry.match(/\[from:(.*?)\]/)&.captures&.first
+    receiver = log_entry.match(/\[to:(.*?)\]/)&.captures&.first
+    flags = log_entry.match(/\[flags:(.*?)\]/)&.captures&.first
+
+    if sender && receiver && flags
+      puts "#{sender},#{receiver},#{flags}"
+    else
+      puts "Invalid log entry format in line: #{log_entry.strip}"
     end
   end
 end
-
