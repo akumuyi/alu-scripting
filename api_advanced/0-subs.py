@@ -1,17 +1,5 @@
 #!/usr/bin/python3
-""" This script takes a subreddit name as input
-and returns the number of subscribers to that subreddit.
-
-Usage:
-    python number_of_subscribers.py <subreddit>
-
-Args:
-    subreddit (str): The name of the subreddit to
-    get the number of subscribers for.
-
-Returns:
-    int: The number of subscribers to the given subreddit.
-"""
+"""Function to query subscribers on a given Reddit subreddit."""
 
 import requests
 
