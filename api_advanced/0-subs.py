@@ -4,27 +4,13 @@ import requests
 
 
 def number_of_subscribers(subreddit):
-    """Gets the number of subscribers to the given subreddit."""
-    # Define the Reddit API URL for the given subreddit
-    url = f"https://www.reddit.com/r/{subreddit}/about.json"
-    # Set a custom User-Agent to avoid issues
+    """Return the total number of subscribers on a given subreddit."""
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
     headers = {
-        'User-Agent': 'MyRedditBot/1.0 (by YourUsername)'
+        "User-Agent": "LloydBot3.2.12 (by /akumuyi)"
     }
-    try:
-        # Send a GET request to the Reddit API
-        response = requests.get(url, headers=headers)
-        # Check if the response is successful
-        if response.status_code == 200:
-            # Parse the JSON response
-            data = response.json()
-            # Extract and return the number of subscribers
-            subscribers = data['data']['subscribers']
-            return subscribers
-        else:
-            # Invalid subreddit or other issue
-            return 0
-    except requests.RequestException as e:
-        # Request error
-        print(f"Error: {e}")
+    response = requests.get(url, headers=headers, allow_redirects=False)
+    if response.status_code == 404:
         return 0
+    results = response.json().get("data")
+    return results.get("subscribers")
